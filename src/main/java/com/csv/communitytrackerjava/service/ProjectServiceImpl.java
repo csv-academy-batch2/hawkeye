@@ -26,10 +26,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     ProjectMapper projectMapper;
-    
+
     @Autowired
     ModelMapper modelMapper;
-    
+
     ProjectResponseDTO projectResponseDTO = new ProjectResponseDTO();
 
     ProjectPayloadDTO payloadDTO = new ProjectPayloadDTO();
@@ -63,7 +63,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .setMatchingStrategy(MatchingStrategies.STANDARD)
                 .setSkipNullEnabled(true);
 
-        if(projectCodeCheck.isPresent()) {
+        if (projectCodeCheck.isPresent()) {
             throw new ProjectCodeExistException("Project code already exist.");
         }
 
@@ -80,11 +80,28 @@ public class ProjectServiceImpl implements ProjectService {
         return toProjectResponseDTO("Successfully fetch all projects.", payloadDTO);
 
     }
-    
-    public ProjectResponseDTO toProjectResponseDTO(String message, ProjectPayloadDTO payloadDTO){
+
+    @Override
+    public ProjectResponseDTO deleteProject(int id) throws RecordNotFoundException {
+        Project project = new Project();
+        Project projectFound = projectRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Project to delete is not found."));
+        modelMapper.getConfiguration()
+                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
+                .setMatchingStrategy(MatchingStrategies.STANDARD)
+                .setSkipNullEnabled(true);
+
+        projectFound.setIsActive(false);
+        modelMapper.map(project, projectFound);
+        payloadDTO.setAdditionalProperty("projects", projectMapper.toDTO(projectRepository.save(projectFound)));
+        return toProjectResponseDTO("Successfully delete the project.", payloadDTO);
+    }
+
+
+    public ProjectResponseDTO toProjectResponseDTO(String message, ProjectPayloadDTO payloadDTO) {
         projectResponseDTO.setMessage(message);
         projectResponseDTO.setPayload(payloadDTO);
-        
+
         return projectResponseDTO;
     }
 

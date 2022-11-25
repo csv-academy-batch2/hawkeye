@@ -4,6 +4,7 @@ import com.csv.communitytrackerjava.dto.ProjectAddDTO;
 import com.csv.communitytrackerjava.dto.ProjectResponseDTO;
 import com.csv.communitytrackerjava.dto.ProjectUpdateDTO;
 import com.csv.communitytrackerjava.exception.ProjectCodeExistException;
+import com.csv.communitytrackerjava.exception.RecordNotFoundException;
 import com.csv.communitytrackerjava.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,5 +35,8 @@ public class ProjectController {
     public ResponseEntity<ProjectResponseDTO> update(@Valid @RequestBody ProjectUpdateDTO projectUpdateDTO, @PathVariable Integer id) throws Exception {
         return new ResponseEntity<>(projectService.updateProject(projectUpdateDTO, id), HttpStatus.ACCEPTED);
     }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ProjectResponseDTO> delete(@PathVariable int id) throws Exception{
+        return new ResponseEntity<>(projectService.deleteProject(id),HttpStatus.OK);
+    }
 }
