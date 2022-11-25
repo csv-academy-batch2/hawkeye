@@ -86,11 +86,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = new Project();
         Project projectFound = projectRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Project to delete is not found."));
-        modelMapper.getConfiguration()
-                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
-                .setMatchingStrategy(MatchingStrategies.STANDARD)
-                .setSkipNullEnabled(true);
-
+        modelMapper.getConfiguration().setSkipNullEnabled(true);
         projectFound.setIsActive(false);
         modelMapper.map(project, projectFound);
         payloadDTO.setAdditionalProperty("projects", projectMapper.toDTO(projectRepository.save(projectFound)));
