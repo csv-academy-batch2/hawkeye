@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
     Optional<Project> findByProjectCode(String projectCode);
+    Optional<Project> findByIsActive(Boolean isActive);
 }

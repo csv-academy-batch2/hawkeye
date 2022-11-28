@@ -1,5 +1,8 @@
 package com.csv.communitytrackerjava.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -7,6 +10,9 @@ import javax.persistence.*;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "project")
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Project extends BaseAuditClass {
 
     @Id
@@ -23,35 +29,6 @@ public class Project extends BaseAuditClass {
     @Column(nullable = false)
     private Boolean isActive;
 
-    public Integer getProjectId() {
-        return projectId;
-    }
 
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
-    }
 
-    public String getProjectDesc() {
-        return projectDesc;
-    }
-
-    public void setProjectDesc(String projectDesc) {
-        this.projectDesc = projectDesc;
-    }
-
-    public String getProjectCode() {
-        return projectCode;
-    }
-
-    public void setProjectCode(String projectCode) {
-        this.projectCode = projectCode;
-    }
-
-    public Boolean getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
 }

@@ -1,6 +1,9 @@
 package com.csv.communitytrackerjava.dto;
 
 import com.fasterxml.jackson.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.annotation.Generated;
 import java.util.Collections;
@@ -14,6 +17,9 @@ import java.util.Map;
         "payload"
 })
 @Generated("jsonschema2pojo")
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
 public class ProjectResponseDTO {
 
     @JsonProperty("errors")
@@ -25,6 +31,7 @@ public class ProjectResponseDTO {
     private ProjectPayloadDTO payload;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
 
     @JsonProperty("errors")
     public List<Object> getErrors() {

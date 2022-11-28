@@ -82,15 +82,17 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectResponseDTO deleteProject(int id) throws RecordNotFoundException {
-        Project project = new Project();
+    public ProjectResponseDTO deleteProject(int id) throws RecordNotFoundException, ProjectCodeExistException {
+        ProjectAddDTO project = new ProjectAddDTO();
         Project projectFound = projectRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Project to delete is not found."));
+        if (!projectFound.getIsActive()) {
+            throw new ProjectCodeExistException("Project was already deleted.");
+        }
         modelMapper.getConfiguration().setSkipNullEnabled(true);
         projectFound.setIsActive(false);
-        modelMapper.map(project, projectFound);
         payloadDTO.setAdditionalProperty("projects", projectMapper.toDTO(projectRepository.save(projectFound)));
-        return toProjectResponseDTO("Successfully delete the project.", payloadDTO);
+        return toProjectResponseDTO("Successfully delete project.", payloadDTO);
     }
 
 
