@@ -25,8 +25,8 @@ public class ProjectController {
 
 
     @GetMapping
-    public ResponseEntity<ProjectResponseDTO> findAll() {
-        return new ResponseEntity<>(projectService.findAllProject(), HttpStatus.OK);
+    public ResponseEntity<ProjectResponseDTO> findAll(Pageable pageable) {
+        return new ResponseEntity<>(projectService.findAllProject(pageable), HttpStatus.OK);
     }
 
     @PostMapping("")
