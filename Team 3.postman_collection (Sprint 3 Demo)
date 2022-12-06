@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "d28eb93f-86e0-4831-9b3e-075359710c94",
+		"_postman_id": "77df7540-d0e9-4599-9c14-4bac6891c64e",
 		"name": "Team 3",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "15125855"
+		"_exporter_id": "24050354"
 	},
 	"item": [
 		{
@@ -75,12 +75,12 @@
 					"response": []
 				},
 				{
-					"name": "Find People by Project ID Success with Inactive Status",
+					"name": "Find People by Project ID Success with Inactive Data",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/projects/people?projectId=1,2,3&status=inactive",
+							"raw": "{{base_url}}/projects/people?projectId=1,2,3&includeAll=true",
 							"host": [
 								"{{base_url}}"
 							],
@@ -94,8 +94,8 @@
 									"value": "1,2,3"
 								},
 								{
-									"key": "status",
-									"value": "inactive"
+									"key": "includeAll",
+									"value": "true"
 								}
 							]
 						}

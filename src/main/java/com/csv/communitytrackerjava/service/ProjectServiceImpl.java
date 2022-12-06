@@ -91,19 +91,8 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Page<ProjectGetPeopleDTO> findPeopleByProjectId(Pageable pageable, Set<Integer> id, String include) throws Exception {
-        List<Project> projects;
-        
-        if(StringUtils.isBlank(include)){
-            projects = projectRepository.findAllByProjectIdInAndIsActiveTrue(id, pageable);
-        }
-        else {
-            if(include.equals("inactive"))
-                projects = projectRepository.findAllByProjectIdIn(id, pageable);
-            else
-                throw new InvalidInputException("Invalid include input.");
-        }
-        
+    public Page<ProjectGetPeopleDTO> findPeopleByProjectId(Pageable pageable, Set<Integer> id, Boolean includeAll) throws Exception {
+        List<Project> projects = includeAll ? projectRepository.findAllByProjectIdIn(id, pageable) : projectRepository.findAllByProjectIdInAndIsActiveTrue(id, pageable);
         List<ProjectGetPeopleDTO> projectList = (
                 projects
                         .stream()

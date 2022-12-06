@@ -40,8 +40,8 @@ public class ProjectController {
     }
     
     @GetMapping("/people")
-    public ResponseEntity<Page<ProjectGetPeopleDTO>> findPeopleByProjectId(@Valid Pageable pageable, @RequestParam Set<Integer> projectId, @RequestParam(required = false) String include) throws Exception {
-        return new ResponseEntity<>(projectService.findPeopleByProjectId(pageable, projectId, include), HttpStatus.ACCEPTED);
+    public ResponseEntity<Page<ProjectGetPeopleDTO>> findPeopleByProjectId(@Valid Pageable pageable, @RequestParam Set<Integer> projectId, @RequestParam(required = false, defaultValue = "false") Boolean includeAll) throws Exception {
+        return new ResponseEntity<>(projectService.findPeopleByProjectId(pageable, projectId, includeAll), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
