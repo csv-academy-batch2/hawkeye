@@ -48,13 +48,18 @@ class ProjectControllerTestGetPeopleByProjectId {
     ProjectGetPeopleDTO projectGetPeopleDTO;
     Pageable pageable;
     Pageable pageableTwo;
+    Pageable pageableThree;
     List<ProjectGetPeopleDTO> projectList;
+    List<ProjectGetPeopleDTO> projectListTwo;
     Page<ProjectGetPeopleDTO> pageProjectList;
     
     Page<ProjectGetPeopleDTO> pageProjectListTwo;
+    Page<ProjectGetPeopleDTO> pageProjectListThree;
     
     People peopleTwo;
     ProjectGetPeopleDTO projectGetPeopleDTOTwo;
+
+    ProjectGetPeopleDTO projectGetPeopleDTOThree;
 
     @BeforeEach
     void setup() {
@@ -62,18 +67,22 @@ class ProjectControllerTestGetPeopleByProjectId {
         peopleTwo = new People(2, 2, 1, "John Raven", "Tamang", "Glomar", "Job Level Desc", "CSV", "TestProjectDesc1", true);
         projectGetPeopleDTO = new ProjectGetPeopleDTO(1, "TestProjectDesc1", "TPC1", true, List.of(peopleOne));
         projectGetPeopleDTOTwo = new ProjectGetPeopleDTO(2, "TestProjectDesc2", "TPC2", true, List.of(peopleTwo));
+        projectGetPeopleDTOThree = new ProjectGetPeopleDTO(3, "TestProjectDesc3", "TPC3", false, List.of(peopleTwo));
         pageable = PageRequest.of(0, 1);
         pageableTwo = PageRequest.of(1, 1);
+        pageableThree = PageRequest.of(0, 20);
         projectList = List.of(projectGetPeopleDTO, projectGetPeopleDTOTwo);
+        projectListTwo = List.of(projectGetPeopleDTO, projectGetPeopleDTOTwo, projectGetPeopleDTOThree);
         pageProjectList = new PageImpl<>(projectList, pageable, projectList.size());
         pageProjectListTwo = new PageImpl<>(projectList, pageableTwo, projectList.size());
+        pageProjectListThree = new PageImpl<>(projectListTwo, pageableThree, projectListTwo.size());
     }
 
 
     @Test
     @DisplayName("Find people by project id with pagination test")
     void findPeopleByProjectId() throws Exception {
-        Mockito.when(projectService.findPeopleByProjectId(Mockito.any(), Mockito.any())).thenReturn(pageProjectList);
+        Mockito.when(projectService.findPeopleByProjectId(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(pageProjectList);
 
         mockMvc.perform(get("/projects/people?projectId=1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -86,7 +95,7 @@ class ProjectControllerTestGetPeopleByProjectId {
     @Test
     @DisplayName("Find people by project id page 2")
     void findPeopleByProjectIdPage2() throws Exception {
-        Mockito.when(projectService.findPeopleByProjectId(Mockito.any(), Mockito.any())).thenReturn(pageProjectListTwo);
+        Mockito.when(projectService.findPeopleByProjectId(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(pageProjectListTwo);
 
         mockMvc.perform(get("/projects/people")
                         .param("projectId", "1,2")
@@ -95,6 +104,8 @@ class ProjectControllerTestGetPeopleByProjectId {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(pageProjectListTwo)))
                 .andExpect(jsonPath("$.size", CoreMatchers.is(1)))
+                .andExpect(jsonPath("$.totalPages", CoreMatchers.is(2)))
+                .andExpect(jsonPath("$.totalElements", CoreMatchers.is(2)))
                 .andExpect(status().isAccepted());
     }
     
@@ -102,8 +113,7 @@ class ProjectControllerTestGetPeopleByProjectId {
     @DisplayName("Find people by project id with pagination test")
     void findPeopleByProjectIdRecordNotFound() throws Exception {
 
-
-        Mockito.when(projectService.findPeopleByProjectId(Mockito.any(), Mockito.any()))
+        Mockito.when(projectService.findPeopleByProjectId(Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenThrow(new RecordNotFoundException("Project doesn't exist."));
 
         mockMvc.perform(get("/projects/people?projectId=100")
@@ -113,5 +123,20 @@ class ProjectControllerTestGetPeopleByProjectId {
                 .andExpect(status().isBadRequest());
 
     }
+
+    @Test
+    @DisplayName("Find people by project id with inactive projects")
+    void findPeopleByProjectIdWithInactive() throws Exception {
+        Mockito.when(projectService.findPeopleByProjectId(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(pageProjectListThree);
+
+        mockMvc.perform(get("/projects/people")
+                        .param("projectId", "1,2,3")
+                        .param("includeAll", "true")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(pageProjectListThree)))
+                .andExpect(jsonPath("$.numberOfElements", CoreMatchers.is(3)))
+                .andExpect(status().isAccepted());
+    }
+
 
 }

@@ -15,7 +15,6 @@ import java.util.Map;
         "message",
         "payload"
 })
-@Generated("jsonschema2pojo")
 public class ProjectResponseDTO {
 
     @JsonProperty("errors")

@@ -10,126 +10,18 @@
 			"name": "Project",
 			"item": [
 				{
-					"name": "Find All Project",
+					"name": "Find All Project Test",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/projects",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"projects"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find People by Project ID Success",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/projects/people?projectId=1",
+							"raw": "{{base_url}}/projects/",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"projects",
-								"people"
-							],
-							"query": [
-								{
-									"key": "projectId",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find People by Multiple Project ID Success",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/projects/people?projectId=1,2",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"projects",
-								"people"
-							],
-							"query": [
-								{
-									"key": "projectId",
-									"value": "1,2"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find People by Multiple Project ID with Pagination Success",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/projects/people?projectId=1,2&size=1&sort=projectId,desc&page=1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"projects",
-								"people"
-							],
-							"query": [
-								{
-									"key": "projectId",
-									"value": "1,2"
-								},
-								{
-									"key": "size",
-									"value": "1"
-								},
-								{
-									"key": "sort",
-									"value": "projectId,desc"
-								},
-								{
-									"key": "page",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find People by Project ID Record Not Found Error",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/projects/people/?projectId=100",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"projects",
-								"people",
 								""
-							],
-							"query": [
-								{
-									"key": "projectId",
-									"value": "100"
-								}
 							]
 						}
 					},
@@ -142,7 +34,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"projectCode\": \"TS-4567\",\r\n    \"projectDesc\": \"team support 1\",\r\n    \"isActive\": 1\r\n}",
+							"raw": "\r\n{\r\n    \"projectCode\": \"TS-1231zxc\",\r\n    \"projectDesc\": \"team support 1\",\r\n    \"isActive\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -168,7 +60,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"projectCode\": \"TS-456\",\r\n    \"projectDesc\": \"team support 1\",\r\n    \"isActive\": 1\r\n}",
+							"raw": "{\r\n    \"projectCode\": \"TS-1\",\r\n    \"projectDesc\": \"\",\r\n    \"isActive\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -377,7 +269,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"projectCode\": \"TS-4\"\r\n}",
+							"raw": "{\r\n    \"projectCode\": \"TS-3\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -404,7 +296,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"projectCode\": \"TS-2\",\r\n    \"projectDesc\": \"team support 2\"\r\n}",
+							"raw": "{\r\n    \"projectCode\": \"TS-123123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
