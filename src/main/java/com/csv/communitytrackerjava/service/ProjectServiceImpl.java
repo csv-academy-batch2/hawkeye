@@ -84,15 +84,14 @@ public class ProjectServiceImpl implements ProjectService {
         return toProjectResponseDTO("Successfully update project.", payloadDTO);
     }
 
+
     @Override
-    public ProjectResponseDTO findAllProject(Pageable pageable) {
-        ProjectPayloadDTO payloadDTO = new ProjectPayloadDTO();
+    public Page<ProjectDTO> findAllProject(Pageable pageable) {
         List<ProjectDTO> projectList = (
                 projectRepository.findByIsActiveTrue(pageable)
                         .stream()
                         .map(projectMapper::toDTO)).toList();
-        payloadDTO.setAdditionalProperty("projects", projectList);
-        return toProjectResponseDTO("Successfully fetch all projects.", payloadDTO);
+        return new PageImpl<>(projectList, pageable, projectList.size());
     }
 
     @Override
