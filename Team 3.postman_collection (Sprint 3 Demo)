@@ -587,6 +587,33 @@
 					"response": []
 				},
 				{
+					"name": "Patch Project Already Deleted",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectCode\": \"TS-2\",\r\n    \"projectDesc\": \"team support 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/projects/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Patch Project Exist Code Error",
 					"request": {
 						"method": "PATCH",
@@ -775,6 +802,33 @@
 							"path": [
 								"projects",
 								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Project Already Deleted",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectCode\": \"TS-2\",\r\n    \"projectDesc\": \"team support 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/projects/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"3"
 							]
 						}
 					},

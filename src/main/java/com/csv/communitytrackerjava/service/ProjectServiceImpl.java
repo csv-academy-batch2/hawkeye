@@ -118,6 +118,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project projectFound = findProject(id);
         modelMapper.getConfiguration().setSkipNullEnabled(true);
         projectFound.setIsActive(false);
+        projectRepository.save(projectFound);
         return toProjectResponseDTO("Successfully delete project.", payloadDTO);
     }
 
