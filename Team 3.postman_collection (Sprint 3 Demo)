@@ -1,14 +1,94 @@
 {
 	"info": {
-		"_postman_id": "77df7540-d0e9-4599-9c14-4bac6891c64e",
+		"_postman_id": "0129c2d9-111f-4ff3-bbd9-8f7e4e34509a",
 		"name": "Team 3",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "24050354"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Project",
 			"item": [
+				{
+					"name": "Delete Project Success",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectCode\": \"TS-2\",\r\n    \"projectDesc\": \"team support 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/projects/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Project Already Deleted Error",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectCode\": \"TS-2\",\r\n    \"projectDesc\": \"team support 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/projects/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Project Record Not Found Error",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectCode\": \"TS-2\",\r\n    \"projectDesc\": \"team support 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/projects/100",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Find All Project",
 					"request": {
@@ -21,6 +101,42 @@
 							],
 							"path": [
 								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Project by Id Success",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/projects/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Project by Id Already Deleted",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/projects/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"3"
 							]
 						}
 					},
@@ -68,6 +184,11 @@
 								{
 									"key": "projectId",
 									"value": "1,2,3"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
 								}
 							]
 						}
@@ -75,7 +196,7 @@
 					"response": []
 				},
 				{
-					"name": "Find People by Project ID Success with Inactive Data",
+					"name": "Find People by Project ID Success with Inactive Status",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -132,6 +253,46 @@
 								{
 									"key": "page",
 									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find People by Multiple Project ID with Pagination Success and inactive",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/projects/people?projectId=1,2,3&size=1&sort=projectId,desc&page=0&includeAll=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"people"
+							],
+							"query": [
+								{
+									"key": "projectId",
+									"value": "1,2,3"
+								},
+								{
+									"key": "size",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "projectId,desc"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "includeAll",
+									"value": "true"
 								}
 							]
 						}
@@ -426,13 +587,40 @@
 					"response": []
 				},
 				{
-					"name": "Patch Project Exist Code Error",
+					"name": "Patch Project Already Deleted",
 					"request": {
 						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"projectCode\": \"TS-2\",\r\n    \"projectDesc\": \"team support 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/projects/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Project Exist Code Error",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectCode\": \"TS-4\",\r\n    \"projectDesc\": \"team support 4\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -528,6 +716,314 @@
 							"path": [
 								"projects",
 								"100"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "v0.0.3demo",
+			"item": [
+				{
+					"name": "Delete Project Success",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectCode\": \"TS-2\",\r\n    \"projectDesc\": \"team support 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/projects/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Project Already Deleted",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectCode\": \"TS-2\",\r\n    \"projectDesc\": \"team support 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/projects/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Project Record Not Found",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectCode\": \"TS-2\",\r\n    \"projectDesc\": \"team support 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/projects/100",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Project Already Deleted",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectCode\": \"TS-2\",\r\n    \"projectDesc\": \"team support 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/projects/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find All Project",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/projects",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Project by Id Success",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/projects/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Project by Id Already Deleted",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/projects/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find People by Project ID Success",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/projects/people?projectId=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"people"
+							],
+							"query": [
+								{
+									"key": "projectId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find People by Multiple Project ID Success",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/projects/people?projectId=1,2,3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"people"
+							],
+							"query": [
+								{
+									"key": "projectId",
+									"value": "1,2,3"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find People by Project ID Success with Inactive Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/projects/people?projectId=1,2,3&includeAll=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"people"
+							],
+							"query": [
+								{
+									"key": "projectId",
+									"value": "1,2,3"
+								},
+								{
+									"key": "includeAll",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find People by Multiple Project ID with Pagination Success",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/projects/people?projectId=1,2,3&size=1&sort=projectId,desc&page=0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"people"
+							],
+							"query": [
+								{
+									"key": "projectId",
+									"value": "1,2,3"
+								},
+								{
+									"key": "size",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "projectId,desc"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find People by Project ID Record Not Found Error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/projects/people/?projectId=100",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"projects",
+								"people",
+								""
+							],
+							"query": [
+								{
+									"key": "projectId",
+									"value": "100"
+								}
 							]
 						}
 					},

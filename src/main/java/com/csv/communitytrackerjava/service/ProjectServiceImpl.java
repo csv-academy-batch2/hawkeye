@@ -66,8 +66,11 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectPayloadDTO payloadDTO = new ProjectPayloadDTO();
 
         Project projectFound = findProject(id);
-        Optional<Project> projectCodeCheck = projectRepository.findByProjectCode(projectUpdateDTO.getProjectCode());
-        projectUpdateDTO.setProjectDesc(StringUtils.isBlank(projectUpdateDTO.getProjectDesc()) ? projectFound.getProjectDesc() : CaseUtils.toCamelCase(projectUpdateDTO.getProjectDesc(), true, ' '));
+        Optional<Project> projectCodeCheck = projectRepository
+                .findByProjectCode(projectUpdateDTO.getProjectCode());
+        projectUpdateDTO.setProjectDesc(StringUtils.isBlank(projectUpdateDTO
+                .getProjectDesc()) ? projectFound.getProjectDesc() : CaseUtils
+                .toCamelCase(projectUpdateDTO.getProjectDesc(), true, ' '));
 
         modelMapper.getConfiguration()
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
@@ -79,15 +82,19 @@ public class ProjectServiceImpl implements ProjectService {
 
         projectFound.setProjectCode(projectUpdateDTO.getProjectCode());
         modelMapper.map(projectUpdateDTO, projectFound);
-        payloadDTO.setAdditionalProperty("projects", projectMapper.toDTO(projectRepository.save(projectFound)));
+        payloadDTO.setAdditionalProperty("projects", projectMapper
+                .toDTO(projectRepository.save(projectFound)));
         return toProjectResponseDTO("Successfully update project.", payloadDTO);
     }
 
+
     @Override
-    public ProjectResponseDTO findAllProject() {
-        ProjectPayloadDTO payloadDTO = new ProjectPayloadDTO();
-        payloadDTO.setAdditionalProperty("projects", projectRepository.findAll());
-        return toProjectResponseDTO("Successfully fetch all projects.", payloadDTO);
+    public Page<ProjectDTO> findAllProject(Pageable pageable) {
+        List<ProjectDTO> projectList = (
+                projectRepository.findByIsActiveTrue(pageable)
+                        .stream()
+                        .map(projectMapper::toDTO)).toList();
+        return new PageImpl<>(projectList, pageable, projectList.size());
     }
 
     @Override
@@ -111,7 +118,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project projectFound = findProject(id);
         modelMapper.getConfiguration().setSkipNullEnabled(true);
         projectFound.setIsActive(false);
-        payloadDTO.setAdditionalProperty("projects", projectMapper.toDTO(projectRepository.save(projectFound)));
+        projectRepository.save(projectFound);
         return toProjectResponseDTO("Successfully delete project.", payloadDTO);
     }
 

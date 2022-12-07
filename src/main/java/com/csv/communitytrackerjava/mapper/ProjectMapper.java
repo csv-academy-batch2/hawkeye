@@ -8,12 +8,6 @@ import org.mapstruct.Mapper;
 public interface ProjectMapper {
 
     ProjectDTO toDTO(Project model);
-
-    Project toModel(ProjectDTO dto);
-
-
     Project validationToModel(ProjectAddDTO projectAddDTO);
-
-
     ProjectGetPeopleDTO toGetPeopleDTO(Project getPeopleDTO);
 }

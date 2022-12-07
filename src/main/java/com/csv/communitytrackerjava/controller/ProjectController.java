@@ -1,9 +1,6 @@
 package com.csv.communitytrackerjava.controller;
 
-import com.csv.communitytrackerjava.dto.ProjectAddDTO;
-import com.csv.communitytrackerjava.dto.ProjectGetPeopleDTO;
-import com.csv.communitytrackerjava.dto.ProjectResponseDTO;
-import com.csv.communitytrackerjava.dto.ProjectUpdateDTO;
+import com.csv.communitytrackerjava.dto.*;
 import com.csv.communitytrackerjava.exception.ProjectCodeExistException;
 import com.csv.communitytrackerjava.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +22,8 @@ public class ProjectController {
 
 
     @GetMapping
-    public ResponseEntity<ProjectResponseDTO> findAll() {
-        return new ResponseEntity<>(projectService.findAllProject(), HttpStatus.OK);
+    public ResponseEntity<Page<ProjectDTO>> findAll(@Valid Pageable pageable) {
+        return new ResponseEntity<>(projectService.findAllProject(pageable), HttpStatus.OK);
     }
 
     @PostMapping("")

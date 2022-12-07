@@ -1,9 +1,6 @@
 package com.csv.communitytrackerjava.service;
 
-import com.csv.communitytrackerjava.dto.ProjectAddDTO;
-import com.csv.communitytrackerjava.dto.ProjectGetPeopleDTO;
-import com.csv.communitytrackerjava.dto.ProjectResponseDTO;
-import com.csv.communitytrackerjava.dto.ProjectUpdateDTO;
+import com.csv.communitytrackerjava.dto.*;
 import com.csv.communitytrackerjava.exception.ProjectCodeExistException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +13,7 @@ public interface ProjectService {
 
     ProjectResponseDTO updateProject(ProjectUpdateDTO projectUpdateDTO, Integer id) throws Exception;
 
-    ProjectResponseDTO findAllProject();
+    Page<ProjectDTO> findAllProject(Pageable pageable);
 
     Page<ProjectGetPeopleDTO> findPeopleByProjectId(Pageable pageable, Set<Integer> id, Boolean includeAll) throws Exception;
     
