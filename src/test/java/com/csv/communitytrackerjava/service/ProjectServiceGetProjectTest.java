@@ -90,6 +90,7 @@ public class ProjectServiceGetProjectTest {
         expected.setMessage("Successfully fetch");
         expected.setPayload(samplePayload);
 
+        Mockito.verify(projectRepository).findById(anyInt());
         assertEquals(expected, result);
     }
 
