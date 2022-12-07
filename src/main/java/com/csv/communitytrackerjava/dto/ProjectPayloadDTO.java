@@ -12,7 +12,6 @@ import java.util.Map;
 @JsonPropertyOrder({
         "projects"
 })
-@Generated("jsonschema2pojo")
 public class ProjectPayloadDTO {
 
     @JsonIgnore

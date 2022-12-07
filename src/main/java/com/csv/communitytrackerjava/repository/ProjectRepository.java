@@ -15,6 +15,11 @@ public interface ProjectRepository extends PagingAndSortingRepository<Project, I
     Optional<Project> findByProjectCode(String projectCode);
 
     List<Project> findAllByProjectIdIn(Set<Integer> id, Pageable pageable);
+
     List<Project> findByIsActiveTrue(Pageable pageable);
+    
+    List<Project> findAllByProjectIdInAndIsActiveTrue(Set<Integer> id, Pageable pageable);
+
+
 
 }

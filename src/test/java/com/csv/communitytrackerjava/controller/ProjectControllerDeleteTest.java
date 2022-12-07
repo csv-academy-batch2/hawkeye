@@ -40,8 +40,20 @@ class ProjectControllerDeleteTest {
 
     @BeforeEach
     void setup() {
-        save = new Project(1, "Description desc", "Code123", true);
-        delete = new Project(1, "Description desc", "Code123", false);
+        save = Project.builder()
+                .projectId(1)
+                .projectDesc("Description desc")
+                .projectCode("Code123")
+                .isActive(true)
+                .build();
+
+        delete = Project.builder()
+                .projectId(1)
+                .projectDesc("Description desc")
+                .projectCode("Code123")
+                .isActive(false)
+                .build();
+
 
     }
 

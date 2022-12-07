@@ -35,7 +35,14 @@ public class ProjectServicePatchTest {
     ModelMapper modelMapper;
     @Spy
     ProjectMapper projectMapper = new ProjectMapperImpl();
-    Project sample = new Project(1, "projectCode", "description", true);
+//    Project sample = new Project(1, "projectCode", "description", true);
+    Project sample = Project.builder()
+            .projectId(1)
+            .projectDesc("description")
+            .projectCode("projectCode")
+            .isActive(true)
+            .build();
+
     ProjectDTO sampleDTO = new ProjectDTO(1, "projectCode", "description");
 
     @SneakyThrows
@@ -51,7 +58,13 @@ public class ProjectServicePatchTest {
 
         projectService.updateProject(newSample, 1);
 
-        Project expected = new Project(1, "NewDescription", "newProjectCode", true);
+//        Project expected = new Project(1, "NewDescription", "newProjectCode", true);
+        Project expected = Project.builder()
+                .projectId(1)
+                .projectDesc("NewDescription")
+                .projectCode("newProjectCode")
+                .isActive(true)
+                .build();
 
         Mockito.verify(projectRepository).save(expected);
     }

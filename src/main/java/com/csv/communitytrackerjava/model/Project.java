@@ -1,9 +1,8 @@
 package com.csv.communitytrackerjava.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Where;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -12,6 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "project")
@@ -31,13 +31,8 @@ public class Project extends BaseAuditClass {
     @Column(name = "isactive", nullable = false)
     private Boolean isActive;
 
+    @Where(clause = "isactive = true")
     @OneToMany(mappedBy = "projectId", fetch = FetchType.LAZY)
     private List<People> peoples;
 
-    public Project(Integer projectId, String projectDesc, String projectCode, Boolean isActive) {
-        this.projectId = projectId;
-        this.projectDesc = projectDesc;
-        this.projectCode = projectCode;
-        this.isActive = isActive;
-    }
 }

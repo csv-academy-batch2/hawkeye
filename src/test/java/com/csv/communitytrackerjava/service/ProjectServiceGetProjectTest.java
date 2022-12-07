@@ -44,11 +44,22 @@ public class ProjectServiceGetProjectTest {
 
     @Spy
     ModelMapper modelMapper;
-
-    Project sample1 = new Project(1, "This is active", "Code1", true);
+    Project sample1 = Project.builder()
+            .projectId(1)
+            .projectDesc("This is active")
+            .projectCode("Code1")
+            .isActive(true).build();
     ProjectDTO sample1DTO = projectMapper.toDTO(sample1);
-    Project sample2 = new Project(2, "This is active", "Code2", true);
-    Project sample3 = new Project(3, "This is not active", "Code3", false);
+    Project sample2 = Project.builder()
+            .projectId(2)
+            .projectDesc("This is active")
+            .projectCode("Code2")
+            .isActive(true).build();
+    Project sample3 = Project.builder()
+            .projectId(3)
+            .projectDesc("This is not active")
+            .projectCode("Code3")
+            .isActive(false).build();
 
     List<Project> samples = List.of(sample1, sample2, sample3);
     Pageable pageable = PageRequest.of(1, 2);

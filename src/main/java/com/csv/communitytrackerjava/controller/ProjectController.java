@@ -37,8 +37,8 @@ public class ProjectController {
     }
     
     @GetMapping("/people")
-    public ResponseEntity<Page<ProjectGetPeopleDTO>> findPeopleByProjectId(@Valid Pageable pageable, @RequestParam Set<Integer> projectId) throws Exception {
-        return new ResponseEntity<>(projectService.findPeopleByProjectId(pageable, projectId), HttpStatus.ACCEPTED);
+    public ResponseEntity<Page<ProjectGetPeopleDTO>> findPeopleByProjectId(@Valid Pageable pageable, @RequestParam Set<Integer> projectId, @RequestParam(required = false, defaultValue = "false") Boolean includeAll) throws Exception {
+        return new ResponseEntity<>(projectService.findPeopleByProjectId(pageable, projectId, includeAll), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
@@ -49,4 +49,5 @@ public class ProjectController {
     public ResponseEntity<ProjectResponseDTO> findById(@Valid @PathVariable int id) throws Exception {
         return new ResponseEntity<>(projectService.findProjectById(id), HttpStatus.OK);
     }
+    
 }

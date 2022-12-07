@@ -41,12 +41,15 @@ class ProjectServiceImplTestGetPeopleByProjectId {
     People peopleOne;
     Project projectTestOne;
     Project projectTestTwo;
+    Project projectTestThree;
     Pageable pageable;
     List<Project> projectList;
-    
+    List<Project> projectListTwo;
     Set<Integer> idList;
 
     Pageable pageableTwo;
+    Pageable pageableThree;
+    
     
 
     @BeforeEach
@@ -54,10 +57,13 @@ class ProjectServiceImplTestGetPeopleByProjectId {
         peopleOne = new People(1, 1, 1, "John Raven", "Tamang", "Glomar", "Job Level Desc", "CSV", "TestProjectDesc1", true);
         projectTestOne = new Project(1, "TestProjectDesc1", "TPC1", true, List.of(peopleOne));
         projectTestTwo = new Project(2, "TestProjectDesc2", "TPC2", true, Collections.emptyList());
+        projectTestThree = new Project(3, "TestProjectDesc3", "TPC3", false, List.of(peopleOne));
         pageable = PageRequest.of(0, 1);
         pageableTwo = PageRequest.of(1, 1);
+        pageableThree = PageRequest.of(0, 20);
         projectList = List.of(projectTestOne, projectTestTwo);
-        idList = new HashSet<>(1);
+        projectListTwo = List.of(projectTestOne, projectTestTwo, projectTestThree);
+        idList = new HashSet<>(10);
         
     }
 
@@ -67,7 +73,7 @@ class ProjectServiceImplTestGetPeopleByProjectId {
 
         Mockito.when(projectRepository.findAllByProjectIdIn(Mockito.any(), Mockito.any())).thenReturn(projectList);
 
-        Page<ProjectGetPeopleDTO> result = projectService.findPeopleByProjectId(pageable, idList);
+        Page<ProjectGetPeopleDTO> result = projectService.findPeopleByProjectId(pageable, idList, false);
 
         Mockito.verify(projectRepository).findAllByProjectIdIn(Mockito.any(), Mockito.any());
         assertEquals(2, result.getContent().size());
@@ -80,18 +86,29 @@ class ProjectServiceImplTestGetPeopleByProjectId {
     void findPeopleByProjectIdPage2() throws Exception {
         Mockito.when(projectRepository.findAllByProjectIdIn(Mockito.any(), Mockito.any())).thenReturn(projectList);
 
-        Page<ProjectGetPeopleDTO> result = projectService.findPeopleByProjectId(pageableTwo, idList);
+        Page<ProjectGetPeopleDTO> result = projectService.findPeopleByProjectId(pageableTwo, idList, false);
 
         Mockito.verify(projectRepository).findAllByProjectIdIn(Mockito.any(), Mockito.any());
         assertEquals(1, result.getPageable().getPageSize());
         assertEquals(1, result.getPageable().getPageNumber());
+    }
+
+    @Test
+    @DisplayName("Find people by project id with inactive data")
+    void findPeopleByProjectIdWithInactive() throws Exception {
+        Mockito.when(projectRepository.findAllByProjectIdInAndIsActiveTrue(Mockito.any(), Mockito.any())).thenReturn(projectListTwo);
+
+        Page<ProjectGetPeopleDTO> result = projectService.findPeopleByProjectId(pageableThree, idList, true);
+
+        Mockito.verify(projectRepository).findAllByProjectIdInAndIsActiveTrue(Mockito.any(), Mockito.any());
+        assertEquals(3, result.getContent().size());
     }
     
     @Test
     @DisplayName("Find people by project id with record not found test")
     void findPeoplByProjectId() throws Exception {
 
-        Throwable exception = assertThrows(RecordNotFoundException.class, () -> projectService.findPeopleByProjectId(pageable, idList));
+        Throwable exception = assertThrows(RecordNotFoundException.class, () -> projectService.findPeopleByProjectId(pageable, idList, false));
 
         Mockito.verify(projectRepository).findAllByProjectIdIn(Mockito.any(), Mockito.any());
         assertEquals("Project doesn't exist", exception.getMessage());

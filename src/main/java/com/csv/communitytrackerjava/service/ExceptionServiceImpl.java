@@ -21,7 +21,6 @@ public class ExceptionServiceImpl implements ExceptionService {
         ProjectPayloadDTO projectPayloadDTO = new ProjectPayloadDTO();
         ApiErrorDTO apiError = new ApiErrorDTO(BAD_REQUEST);
 
-
         // Setters
         apiError.setType(exception.getClass().getSimpleName());
         projectResponseDTO.setMessage(exception.getMessage());
