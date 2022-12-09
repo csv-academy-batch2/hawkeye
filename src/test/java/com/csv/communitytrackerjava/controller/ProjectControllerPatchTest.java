@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest
 
-public class ProjectControllerTestPatch {
+public class ProjectControllerPatchTest {
     ProjectDTO jojoProj;
 
     @MockBean

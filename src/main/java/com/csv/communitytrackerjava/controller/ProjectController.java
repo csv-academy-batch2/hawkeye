@@ -1,16 +1,17 @@
 package com.csv.communitytrackerjava.controller;
 
-import com.csv.communitytrackerjava.dto.ProjectAddDTO;
-import com.csv.communitytrackerjava.dto.ProjectResponseDTO;
-import com.csv.communitytrackerjava.dto.ProjectUpdateDTO;
+import com.csv.communitytrackerjava.dto.*;
 import com.csv.communitytrackerjava.exception.ProjectCodeExistException;
 import com.csv.communitytrackerjava.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/projects")
@@ -21,8 +22,8 @@ public class ProjectController {
 
 
     @GetMapping
-    public ResponseEntity<ProjectResponseDTO> findAll() {
-        return new ResponseEntity<>(projectService.findAllProject(), HttpStatus.OK);
+    public ResponseEntity<Page<ProjectDTO>> findAll(@Valid Pageable pageable) {
+        return new ResponseEntity<>(projectService.findAllProject(pageable), HttpStatus.OK);
     }
 
     @PostMapping("")
@@ -34,5 +35,19 @@ public class ProjectController {
     public ResponseEntity<ProjectResponseDTO> update(@Valid @RequestBody ProjectUpdateDTO projectUpdateDTO, @PathVariable Integer id) throws Exception {
         return new ResponseEntity<>(projectService.updateProject(projectUpdateDTO, id), HttpStatus.ACCEPTED);
     }
+    
+    @GetMapping("/people")
+    public ResponseEntity<Page<ProjectGetPeopleDTO>> findPeopleByProjectId(@Valid Pageable pageable, @RequestParam Set<Integer> projectId, @RequestParam(required = false, defaultValue = "false") Boolean includeAll) throws Exception {
+        return new ResponseEntity<>(projectService.findPeopleByProjectId(pageable, projectId, includeAll), HttpStatus.ACCEPTED);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ProjectResponseDTO> delete(@Valid @PathVariable int id) throws Exception {
+        return new ResponseEntity<>(projectService.deleteProject(id), HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<ProjectResponseDTO> findById(@Valid @PathVariable int id) throws Exception {
+        return new ResponseEntity<>(projectService.findProjectById(id), HttpStatus.OK);
+    }
+    
 }

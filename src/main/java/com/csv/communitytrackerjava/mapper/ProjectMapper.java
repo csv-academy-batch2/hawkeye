@@ -1,9 +1,6 @@
 package com.csv.communitytrackerjava.mapper;
 
-import com.csv.communitytrackerjava.dto.ProjectAddDTO;
-import com.csv.communitytrackerjava.dto.ProjectDTO;
-import com.csv.communitytrackerjava.dto.ProjectResponseDTO;
-import com.csv.communitytrackerjava.dto.ProjectUpdateDTO;
+import com.csv.communitytrackerjava.dto.*;
 import com.csv.communitytrackerjava.model.Project;
 import org.mapstruct.Mapper;
 
@@ -11,14 +8,6 @@ import org.mapstruct.Mapper;
 public interface ProjectMapper {
 
     ProjectDTO toDTO(Project model);
-
-    Project toModel(ProjectDTO dto);
-
-    Iterable<ProjectDTO> toListDTO(Iterable<Project> listModel);
-
-    Iterable<Project> toListModel(Iterable<ProjectDTO> listDto);
-
     Project validationToModel(ProjectAddDTO projectAddDTO);
-
-    ProjectResponseDTO toResponseDTO(ProjectUpdateDTO projectUpdateDTO);
+    ProjectGetPeopleDTO toGetPeopleDTO(Project getPeopleDTO);
 }

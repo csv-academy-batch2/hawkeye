@@ -1,7 +1,8 @@
 package com.csv.communitytrackerjava.controller;
 
-import com.csv.communitytrackerjava.dto.ProjectPayloadDTO;
 import com.csv.communitytrackerjava.dto.ProjectResponseDTO;
+import com.csv.communitytrackerjava.exception.InactiveDataException;
+import com.csv.communitytrackerjava.exception.InvalidInputException;
 import com.csv.communitytrackerjava.exception.ProjectCodeExistException;
 import com.csv.communitytrackerjava.exception.RecordNotFoundException;
 import com.csv.communitytrackerjava.service.ExceptionService;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.Objects;
 
@@ -22,14 +24,15 @@ public class ExceptionController {
     @Autowired
     ExceptionService exceptionService;
 
-    @ExceptionHandler(value = ProjectCodeExistException.class)
-    public ResponseEntity<ProjectResponseDTO> handleProjectCodeExistException(ProjectCodeExistException e) {
-        return new ResponseEntity<>(exceptionService.formatBadRequest(e), HttpStatus.BAD_REQUEST);
-    }
 
-    @ExceptionHandler(value = RecordNotFoundException.class)
-    public ResponseEntity<ProjectResponseDTO> handleRecordNotFoundException(RecordNotFoundException e) {
-        return new ResponseEntity<>(exceptionService.formatBadRequest(e), HttpStatus.BAD_REQUEST);
+    @ExceptionHandler({RecordNotFoundException.class, ProjectCodeExistException.class, InactiveDataException.class, InvalidInputException.class})
+    public ResponseEntity<ProjectResponseDTO> handleRecordNotFoundException(Exception e) {
+           return new ResponseEntity<>(exceptionService.formatBadRequest(e), HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class})
+    public ResponseEntity<ProjectResponseDTO> handleMethodArgumentTypeMismatchException(Exception e) {
+        return new ResponseEntity<>(exceptionService.formatBadRequest(e, "Invalid input type."), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)

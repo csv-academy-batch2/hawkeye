@@ -30,6 +30,6 @@ public class ApiErrorDTO {
         this.status = status;
         this.type = message;
     }
-    
-    
+
+
 }

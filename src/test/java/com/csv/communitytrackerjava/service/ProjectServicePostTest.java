@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-public class ProjectServiceTestsPost {
+public class ProjectServicePostTest {
     @Mock
     ProjectRepository projectRepository;
 
@@ -44,7 +44,13 @@ public class ProjectServiceTestsPost {
 
         ProjectResponseDTO save = projectService.saveProject(baqui);
 
-        Project expected = new Project(1, "ProjectDesc", "project code", true);
+//        Project expected = new Project(1, "ProjectDesc", "project code", true);
+        Project expected = Project.builder()
+                .projectId(1)
+                .projectDesc("ProjectDesc")
+                .projectCode("project code")
+                .isActive(true)
+                .build();
 
         Mockito.verify(projectRepository).save(expected);
         assertThat(save.equals(expected));
